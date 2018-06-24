@@ -220,9 +220,8 @@ public class GestorSimulacion {
             tanque.setFinDescarga(tanque.getFinDescarga() + duracionInterrupcion);
             tanque.setEstado("I");
         }
-        
+       
         this.actualizarVectorEstadoActual();
-        
     }
     
     private void simularFinInterrupcion(Tanque tanque) {
@@ -242,8 +241,9 @@ public class GestorSimulacion {
         }
         
         this.interrupcionServer.generarProximaInterrupcion(reloj);
-        
+        this.interrupcionServer.setFinInterrupcion(-1);
         this.actualizarVectorEstadoActual();
+        
     }
     
     
@@ -326,21 +326,35 @@ public class GestorSimulacion {
         System.out.println("rnd :: loco" + this.interrupcionServer.getRndInterrupcion() );
         this.actualizarVectorEstadoActual();
         System.out.println("rnd :: loco" + this.interrupcionServer.getRndInterrupcion() );
+        boolean flagInt = false;
         while (this.reloj <= this.horaHasta){
             this.ingresoPuerto.setCargaActual(-1);
             this.ingresoPuerto.setRndContenido(-1);
 //            this.interrupcionServer.setRndInterrupcion(-1);
 //            this.interrupcionServer.setInicioInterrupcion(-1);
-            this.interrupcionServer.setFinInterrupcion(-1);
-            double horaEvento = this.vectorEstadoActual.getProxEventoHora();
+
+            //this.interrupcionServer.setFinInterrupcion(-1);
+            double horaEvento = this.vectorEstadoActual.getProxEventoHora(false);
             
             if (horaEvento == this.interrupcionServer.getInicioInterrupcion()) {
-                this.simularInicioInterrupcion(this.tanque1);
+                System.out.println("Entro en interr");
+                if(flagInt == false){
+                    this.simularInicioInterrupcion(this.tanque1);
+                    flagInt = true;
+                }
+                else{
+                    horaEvento = this.vectorEstadoActual.getProxEventoHora(true);
+                }
+                
             }
             
             if (horaEvento == this.interrupcionServer.getFinInterrupcion()) {
                 this.simularFinInterrupcion(this.tanque1);
+                
+                System.out.println(this.interrupcionServer.getFinInterrupcion());
+                flagInt = false;
             }
+            
             
             
             for(Tanque i:this.tanques){

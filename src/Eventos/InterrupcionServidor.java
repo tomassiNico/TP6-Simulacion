@@ -93,7 +93,8 @@ public class InterrupcionServidor {
         
         this.porcInterrupcion = this.porcentajeInterrupcion();
         this.inicioInterrupcion = reloj + this.calcularTiempoInterrupcion();
-        
+        this.inicioInterrupcion = Math.round(this.inicioInterrupcion * 100.0) / 100.0;
+         
     }
     
     public void calcularFinInterrupcion() {
@@ -108,7 +109,6 @@ public class InterrupcionServidor {
         retorna el porcentaje en el cual se dará la interrupcion
         */
         int porcentaje = 100;
-        
         if (this.rndInterrupcion >= 0.5) {
             porcentaje = 70;
         }
