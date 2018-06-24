@@ -15,7 +15,7 @@ public class InterrupcionServidor {
     
     private Random rnd;
     private double rndInterrupcion, porcInterrupcion, inicioInterrupcion, finInterrupcion;
-    private double alfa = 0.5;
+    private double alfa = 0.85732;
     private double h = 0.1;
     
     public InterrupcionServidor (){
